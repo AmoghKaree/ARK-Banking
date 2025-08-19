@@ -1,0 +1,9 @@
+Amogh Karee | withdrew 500 and now has only 500.0 in their checking account | DATE OF TRANSACTION Thu Sep 19 13:31:55 2024
+Amogh Karee | deposited 1000 and now has 3000.0 in their savings account | DATE OF TRANSACTION Thu Sep 19 13:34:40 2024
+Amogh Karee | deposited 1000 and now has 4000.0 in their savings account | DATE OF TRANSACTION Thu Sep 19 13:35:27 2024
+Diego Benitez | deposited 2000 and now has 2000.5 in their savings account | DATE OF TRANSACTION Thu Sep 19 13:39:06 2024
+Anshu Karee | deposited 2000 and now has 2900.0 in their checking account  | DATE OF TRANSACTION Thu Sep 19 13:41:10 2024
+Shirval Raut | deposited 20000 and now has 120000.0 in their savings account  | DATE OF TRANSACTION Thu Sep 19 13:46:31 2024
+Amogh Karee | withdrew 2000 and now has only -1500.0 in their checking account  | DATE OF TRANSACTION Sat Sep 21 20:33:57 2024
+Amogh Karee | withdrew 1000 and now has only 3000.0 in their savings account  | DATE OF TRANSACTION Tue Oct  1 14:03:20 2024
+Louis Gruntz | transferred 100.0 to their savings account and now has 400.0 in their checking account and 3100.0 in their savings account | DATE OF TRANSACTION Thu Oct  3 14:16:10 2024
