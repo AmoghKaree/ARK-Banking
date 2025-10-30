@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for
-from Ark_Banking_Core import *  # import your banking functions
+from Ark_Banking_Core import * 
 
 app = Flask(__name__)
+
+cus = customer()
 
 @app.route('/')
 def home():
@@ -10,10 +12,17 @@ def home():
 @app.route('/create_account', methods=['GET', 'POST'])
 def create_account():
     if request.method == 'POST':
-        name = request.form['name']
+        firstName = request.form['firstName']
+        lastName = request.form['lastName']
+        gender = request.form['gender']
+        dob = request.form['dob']
         ssn = request.form['ssn']
-        # Call your backend function here
-        create_new_account(name, ssn)
+        income = request.form['income']
+        cOrS = request.form['cOrS']
+        checking = request.form.get('checking', 0)
+        savings = request.form.get('savings', 0)
+
+        create_new_account(firstName, lastName, gender, dob, ssn, income, cOrS, checking, savings)
         return redirect(url_for('home'))
     return render_template('create_account.html')
 
