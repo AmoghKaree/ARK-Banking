@@ -35,7 +35,7 @@ class customer:
             customerData = open('bankingData.txt', 'a+')
             bankingData = open('checking&SavingsData.txt', 'a+')
 
-        # customerInfo = str(firstName) + ' | ' + str(lastName) + ' | ' + str(gender) + ' | ' + str(dob) + ' | ' + str(income) + ' | ' + str(ssn) + ' | ' + '\n'
+        customerInfo = str(firstName) + ' | ' + str(lastName) + ' | ' + str(gender) + ' | ' + str(dob) + ' | ' + str(income) + ' | ' + str(ssn) + ' | ' + '\n'
 
         userIdChecking = 111111
         userIdSavings = 111111
@@ -522,6 +522,7 @@ acc = Accounts()
 #print(acc.clientToClientTransaction())
 # print(acc.clientTransactionStatement())
 print(acc.closeAccount())
+
 
 
 
