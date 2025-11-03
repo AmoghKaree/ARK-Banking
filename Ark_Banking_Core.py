@@ -4,6 +4,9 @@ import datetime
 import calendar
 
 class customer:
+
+    def createAccount(self, firstName, lastName, gender, dob, ssn, income, cOrS, checking=0, savings=0):
+        print('hello')
     def storeCustomerDetails(self):
         print('Hello, you are opneing an account with Amogh Banking. Please enter prelimenery information. \n')
         firstName = input('What is your first name? \n')
@@ -520,5 +523,6 @@ acc = Accounts()
 #print(acc.clientToClientTransaction())
 # print(acc.clientTransactionStatement())
 print(acc.closeAccount())
+
 
 
