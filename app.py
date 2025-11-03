@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from Ark_Banking_Core import * 
+import os
 
 app = Flask(__name__)
 
@@ -22,9 +23,23 @@ def create_account():
         checking = request.form.get('checking', 0)
         savings = request.form.get('savings', 0)
 
-        create_new_account(firstName, lastName, gender, dob, ssn, income, cOrS, checking, savings)
-        return redirect(url_for('home'))
+        cus.createAccount(firstName, lastName, gender, dob, ssn, income, cOrS, checking, savings)
+
+        return redirect(url_for('success', message="Account successfully created!"))
+
     return render_template('create_account.html')
 
+
+@app.route('/success')
+def success():
+    message = request.args.get('message', "Action completed successfully.")
+    return render_template('success.html', message=message)
+
+
 if __name__ == '__main__':
+    # Ensure your data files exist so Python doesn’t crash
+    for file in ["bankingData.txt", "checking&SavingsData.txt", "accountIDInfo.txt"]:
+        if not os.path.exists(file):
+            open(file, 'w').close()
+
     app.run(debug=True)
