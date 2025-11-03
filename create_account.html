@@ -1,107 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Create Account</title>
-    <style>
-    body {
-      font-family: "Poppins", sans-serif;
-      background: linear-gradient(135deg, #d0e6f7, #f8f9fa);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-
-    .form-container {
-      background-color: white;
-      padding: 30px 40px;
-      border-radius: 15px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-      width: 100%;
-      max-width: 400px;
-    }
-
-    h2 {
-      text-align: center;
-      color: #333;
-      margin-bottom: 25px;
-    }
-
-    label {
-      display: block;
-      margin-top: 12px;
-      font-weight: 500;
-      color: #444;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 10px;
-      margin-top: 6px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 15px;
-    }
-
-    input:focus, select:focus {
-      border-color: #007bff;
-      outline: none;
-      box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
-    }
-
-    button {
-      width: 100%;
-      margin-top: 25px;
-      padding: 12px;
-      background-color: #007bff;
-      border: none;
-      border-radius: 8px;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #0056b3;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account | ARK Banking</title>
+  <link rel="stylesheet" href="style.css"> <!-- link to your main stylesheet -->
 </head>
 <body>
-    <h1>Create New Account</h1>
-    <form method="POST">
-        <label>First Name:</label>
-        <input type="text" name="name" required><br><br>
+  <header>
+    ARK Banking
+  </header>
 
-        <label>Last Name:</label>
-        <input type="text" name="ssn" required><br><br>
+  <main class="container">
+    <h1>Create an Account</h1>
+    <p>Fill out the information below to open your ARK Banking account.</p>
 
-         <label>Gender:</label>
-        <input type="text" name="ssn" required><br><br>
+    <form action="/create_account" method="POST">
+      <label for="firstName">First Name</label>
+      <input type="text" id="firstName" name="firstName" required>
 
-         <label>Date of Birth:</label>
-        <input type="text" name="ssn" required><br><br>
+      <label for="lastName">Last Name</label>
+      <input type="text" id="lastName" name="lastName" required>
 
-         <label>SSN:</label>
-        <input type="text" name="ssn" required><br><br>
+      <label for="gender">Gender</label>
+      <select id="gender" name="gender" required>
+        <option value="">Select...</option>
+        <option>Male</option>
+        <option>Female</option>
+        <option>Other</option>
+      </select>
 
-         <label>Approximate income per year:</label>
-        <input type="text" name="ssn" required><br><br>
+      <label for="dob">Date of Birth</label>
+      <input type="date" id="dob" name="dob" required>
 
-         <label>Would you like to open a checking account, savings account or both?:</label>
-        <label for="checking">Checking</label><br>
-        <input type="radio" id="checking" value="checking"><br><br>
-        <label for="savings">CSS</label><br>
-        <input type="radio" id="savings" value="savings"><br><br>
-        <label for="both">Both</label><br>
-        <input type="radio" id="both" value="both"><br><br>
+      <label for="ssn">SSN</label>
+      <input type="text" id="ssn" name="ssn" required>
 
-         <label>SSN:</label>
-        <input type="text" name="ssn" required><br><br>
-        
-        <button type="submit">Create Account</button>
+      <label for="income">Annual Income</label>
+      <input type="number" id="income" name="income" required>
+
+      <div class="account-options">
+        <label>Account Type</label>
+        <input type="radio" id="checking" name="cOrS" value="checking" required>
+        <label for="checking">Checking</label>
+
+        <input type="radio" id="savings" name="cOrS" value="savings">
+        <label for="savings">Savings</label>
+
+        <input type="radio" id="both" name="cOrS" value="both">
+        <label for="both">Both</label>
+      </div>
+
+      <label for="checkingDeposit">Initial Checking Deposit</label>
+      <input type="number" id="checkingDeposit" name="checking" placeholder="Enter 0 if none">
+
+      <label for="savingsDeposit">Initial Savings Deposit</label>
+      <input type="number" id="savingsDeposit" name="savings" placeholder="Enter 0 if none">
+
+      <button type="submit">Create Account</button>
     </form>
+
+    <div class="menu mt-2">
+      <a href="index.html">Return to Home</a>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2025 ARK Banking. All rights reserved.
+  </footer>
 </body>
 </html>
