@@ -246,6 +246,23 @@ footer {
   }
 }
 
+.radio-group {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap; /* stays nice on small screens */
+}
+
+.radio-group div {
+  display: flex;
+  align-items: center;
+}
+
+.radio-group input[type="radio"] {
+  margin-right: 0.4rem;
+  transform: translateY(0); /* perfect centering */
+}
+
 .text-center {
   text-align: center;
 }
