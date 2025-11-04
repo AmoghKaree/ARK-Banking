@@ -13,6 +13,8 @@ def home():
 @app.route('/create_account', methods=['GET', 'POST'])
 def create_account():
     if request.method == 'POST':
+        userName = request.form['userName']
+        password = request.form['password']
         firstName = request.form['firstName']
         lastName = request.form['lastName']
         gender = request.form['gender']
