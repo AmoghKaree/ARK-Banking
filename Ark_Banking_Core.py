@@ -4,7 +4,7 @@ import datetime
 import calendar
 
 class customer:
-    def createAccount(self, firstName, lastName, gender, dob, ssn, income, cOrS, checking=0, savings=0):
+    def createAccount(self, userName, password, firstName, lastName, gender, dob, ssn, income, cOrS, checking=0, savings=0):
         print('Hello, you are opneing an account with Amogh Banking. Please enter prelimenery information. \n')
         """
         firstName = input('What is your first name? \n')
@@ -35,7 +35,7 @@ class customer:
             customerData = open('bankingData.txt', 'a+')
             bankingData = open('checking&SavingsData.txt', 'a+')
 
-        customerInfo = str(firstName) + ' | ' + str(lastName) + ' | ' + str(gender) + ' | ' + str(dob) + ' | ' + str(income) + ' | ' + str(ssn) + ' | ' + '\n'
+        customerInfo = str(userName) + ' | ' + str(password) + ' | ' + str(firstName) + ' | ' + str(lastName) + ' | ' + str(gender) + ' | ' + str(dob) + ' | ' + str(income) + ' | ' + str(ssn) + ' | ' + '\n'
 
         userIdChecking = 111111
         userIdSavings = 111111
@@ -522,6 +522,7 @@ acc = Accounts()
 #print(acc.clientToClientTransaction())
 # print(acc.clientTransactionStatement())
 print(acc.closeAccount())
+
 
 
 
