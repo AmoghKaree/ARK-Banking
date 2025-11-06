@@ -521,7 +521,8 @@ acc = Accounts()
 # print(acc.moveToCheckingOrSavings())
 #print(acc.clientToClientTransaction())
 # print(acc.clientTransactionStatement())
-print(acc.closeAccount())
+# print(acc.closeAccount())
+
 
 
 
