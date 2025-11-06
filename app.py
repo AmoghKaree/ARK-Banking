@@ -25,7 +25,7 @@ def create_account():
         checking = request.form.get('checking', 0)
         savings = request.form.get('savings', 0)
 
-        cus.createAccount(firstName, lastName, gender, dob, ssn, income, cOrS, checking, savings)
+        cus.createAccount(userName, password, firstName, lastName, gender, dob, ssn, income, cOrS, checking, savings)
 
         return redirect(url_for('success', message="Account successfully created!"))
 
