@@ -1,3 +1,7 @@
+This is my project which is ran by render: https://ark-banking.onrender.com
+
+Feel free to create an account and play around with it!
+
 Capture Custumor Details
 - ask user input, First name, last name , gender, dob, ssn, income. Ask if you want to open a checking, savings, or both
 - ask the amount you are putting in either account, if both, how much money in each account seperatly.
