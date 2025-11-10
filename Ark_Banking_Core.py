@@ -6,7 +6,7 @@ import calendar
 class customer:
     def __init__(self, userName, passWord)
         self.userName = userName
-        self.password = password
+        self.passWord = password
         
     def check_login(self, userName, passWord)
         bankingCustomerData = open('bankingData.txt')
@@ -539,6 +539,7 @@ acc = Accounts()
 #print(acc.clientToClientTransaction())
 # print(acc.clientTransactionStatement())
 # print(acc.closeAccount())
+
 
 
 
