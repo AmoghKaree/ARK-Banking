@@ -4,6 +4,22 @@ import datetime
 import calendar
 
 class customer:
+    def __init__(self, userName, passWord)
+        self.userName = userName
+        self.password = password
+        
+    def check_login(self, userName, passWord)
+        bankingCustomerData = open('bankingData.txt')
+        lstBankingDetails = bankingCustomerData.readLines()
+
+        for customer in lstBankingDetials:
+            listCust = customer.split(" | ")
+            username = listCust[0]
+            password = listCust[1]
+            if username == userName and password == passWord:
+                return ("success")
+        return("fail")
+        
     def createAccount(self, userName, password, firstName, lastName, gender, dob, ssn, income, cOrS, checking=0, savings=0):
         print('Hello, you are opneing an account with Amogh Banking. Please enter prelimenery information. \n')
         """
@@ -251,11 +267,12 @@ class Accounts:
 
 
     def howMuchMoney(self):
+        """
         userName = input('What is your full name: ')
         nameVar = userName.split()
         firstName = nameVar[0]
         lastName = nameVar[1]
-
+        """
         checkingAndSavingsData = open('checking&SavingsData.txt', 'r')
         bankingCustomerData = open('bankingData.txt', 'r')
 
@@ -522,6 +539,7 @@ acc = Accounts()
 #print(acc.clientToClientTransaction())
 # print(acc.clientTransactionStatement())
 # print(acc.closeAccount())
+
 
 
 
