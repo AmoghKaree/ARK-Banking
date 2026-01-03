@@ -5,43 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ARK Banking - Transaction History</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  <style>
-    .transaction-list {
-      background: var(--light-gray);
-      border-radius: 8px;
-      overflow: hidden;
-    }
-    
-    .transaction-item {
-      padding: 1.5rem;
-      border-bottom: 2px solid var(--border-color);
-      background: var(--white);
-      margin-bottom: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    }
-    
-    .transaction-item:last-child {
-      border-bottom: none;
-    }
-    
-    .no-transactions {
-      text-align: center;
-      padding: 3rem;
-      color: var(--sage);
-    }
-  </style>
 </head>
 <body>
-  <header>
-    ARK BANKING - TRANSACTION HISTORY
-  </header>
-  
-  <div class="container">
-    <h2>Your Transaction History</h2>
-    <p>Review all your recent banking activities.</p>
-    
-    <div class="transaction-list">
+  <!-- Top Header -->
+  <div class="top-header">
+    <h1>ARK BANKING</h1>
+    <div class="user-info">
+      <a href="{{ url_for('dashboard') }}" class="logout-link">← Back to Dashboard</a>
+    </div>
+  </div>
+
+  <!-- Navigation Tabs -->
+  <nav class="nav-tabs">
+    <div class="nav-tabs-container">
+      <a href="{{ url_for('dashboard') }}" class="nav-tab">Accounts</a>
+      <a href="{{ url_for('transactions') }}" class="nav-tab active">Transactions</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="transactions-section">
+      <h3>Your Transaction History</h3>
+      
       {% if transactions %}
         {% for trans in transactions %}
         <div class="transaction-item">
@@ -49,18 +35,17 @@
         </div>
         {% endfor %}
       {% else %}
-        <div class="no-transactions">
-          <p>No transactions found.</p>
+        <div style="text-align: center; padding: 3rem; color: var(--text-medium);">
+          <p style="font-size: 1.1rem; margin-bottom: 0.5rem;">No transactions found</p>
           <p>Start by making a deposit or withdrawal!</p>
+          <div style="margin-top: 2rem;">
+            <a href="{{ url_for('deposit') }}" class="btn-primary" style="display: inline-block;">Make a Deposit</a>
+          </div>
         </div>
       {% endif %}
     </div>
-    
-    <div class="menu mt-2">
-      <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
-    </div>
   </div>
-  
+
   <footer>
     &copy; 2025 ARK Banking. All Rights Reserved.
   </footer>
