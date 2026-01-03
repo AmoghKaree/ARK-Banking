@@ -123,169 +123,210 @@ class customer:
 class Accounts:
     
     def get_user_accounts(self, userName):
-        """Get account information for a specific user"""
-        if not os.path.exists('bankingData.txt') or not os.path.exists('checking&SavingsData.txt'):
-            return None
-        
-        try:
-            # Find user's account IDs
-            account_ids = []
-            with open('bankingData.txt', 'r') as f:
-                for line in f:
-                    parts = line.strip().split(' | ')
-                    if len(parts) >= 2 and parts[0].strip() == userName:
-                        # Extract all account IDs (starting from index 8)
-                        for i in range(8, len(parts)):
-                            id_val = parts[i].strip()
-                            if id_val and id_val != '':
-                                account_ids.append(id_val)
-                        break
-            
-            if not account_ids:
-                return None
-            
-            # Find balances
-            with open('checking&SavingsData.txt', 'r') as f:
-                for acc_line in f:
-                    acc_parts = acc_line.strip().split(' | ')
-                    
-                    if acc_parts[0] == 'both' and len(acc_parts) >= 5:
-                        checking_id = acc_parts[3].strip()
-                        savings_id = acc_parts[4].strip()
-                        
-                        if checking_id in account_ids and savings_id in account_ids:
-                            return {
-                                'type': 'both',
-                                'checkingBalance': float(acc_parts[1]),
-                                'savingsBalance': float(acc_parts[2]),
-                                'checkingId': checking_id,
-                                'savingsId': savings_id
-                            }
-                    
-                    elif acc_parts[0] == 'checking' and len(acc_parts) >= 3:
-                        checking_id = acc_parts[2].strip()
-                        
-                        if checking_id in account_ids:
-                            return {
-                                'type': 'checking',
-                                'checkingBalance': float(acc_parts[1]),
-                                'savingsBalance': 0,
-                                'checkingId': checking_id,
-                                'savingsId': None
-                            }
-                    
-                    elif acc_parts[0] == 'savings' and len(acc_parts) >= 3:
-                        savings_id = acc_parts[2].strip()
-                        
-                        if savings_id in account_ids:
-                            return {
-                                'type': 'savings',
-                                'checkingBalance': 0,
-                                'savingsBalance': float(acc_parts[1]),
-                                'checkingId': None,
-                                'savingsId': savings_id
-                            }
-        
-        except Exception as e:
-            print(f"Get user accounts error: {e}")
-            return None
-        
+    """Get account information for a specific user"""
+    if not os.path.exists('bankingData.txt') or not os.path.exists('checking&SavingsData.txt'):
+        print(f"DEBUG: Files don't exist")
         return None
+    
+    try:
+        # Find user's account IDs
+        account_ids = []
+        with open('bankingData.txt', 'r') as f:
+            for line in f:
+                parts = [p.strip() for p in line.strip().split(' | ')]
+                if len(parts) >= 2 and parts[0] == userName:
+                    # Extract all account IDs (starting from index 8)
+                    for i in range(8, len(parts)):
+                        id_val = parts[i]
+                        if id_val and id_val != '':
+                            account_ids.append(id_val)
+                    break
+        
+        if not account_ids:
+            print(f"DEBUG: No account IDs found for {userName}")
+            return None
+        
+        print(f"DEBUG: Found account IDs for {userName}: {account_ids}")
+        
+        # Find balances - read the entire file and check each line
+        with open('checking&SavingsData.txt', 'r') as f:
+            lines = f.readlines()
+        
+        print(f"DEBUG: Total lines in checking&SavingsData.txt: {len(lines)}")
+        
+        for line_num, acc_line in enumerate(lines):
+            acc_parts = [p.strip() for p in acc_line.strip().split(' | ')]
+            
+            if not acc_parts or not acc_parts[0]:
+                continue
+            
+            print(f"DEBUG: Line {line_num}: {acc_parts}")
+            
+            if acc_parts[0] == 'both' and len(acc_parts) >= 5:
+                checking_id = acc_parts[3]
+                savings_id = acc_parts[4]
+                
+                print(f"DEBUG: Checking 'both' - IDs: {checking_id}, {savings_id} against {account_ids}")
+                
+                if checking_id in account_ids and savings_id in account_ids:
+                    print(f"DEBUG: MATCH! Returning both accounts")
+                    return {
+                        'type': 'both',
+                        'checkingBalance': float(acc_parts[1]),
+                        'savingsBalance': float(acc_parts[2]),
+                        'checkingId': checking_id,
+                        'savingsId': savings_id
+                    }
+            
+            elif acc_parts[0] == 'checking' and len(acc_parts) >= 3:
+                checking_id = acc_parts[2]
+                
+                print(f"DEBUG: Checking 'checking' - ID: {checking_id} against {account_ids}")
+                
+                if checking_id in account_ids:
+                    print(f"DEBUG: MATCH! Returning checking account")
+                    return {
+                        'type': 'checking',
+                        'checkingBalance': float(acc_parts[1]),
+                        'savingsBalance': 0,
+                        'checkingId': checking_id,
+                        'savingsId': None
+                    }
+            
+            elif acc_parts[0] == 'savings' and len(acc_parts) >= 3:
+                savings_id = acc_parts[2]
+                
+                print(f"DEBUG: Checking 'savings' - ID: {savings_id} against {account_ids}")
+                
+                if savings_id in account_ids:
+                    print(f"DEBUG: MATCH! Returning savings account")
+                    return {
+                        'type': 'savings',
+                        'checkingBalance': 0,
+                        'savingsBalance': float(acc_parts[1]),
+                        'checkingId': None,
+                        'savingsId': savings_id
+                    }
+    
+    except Exception as e:
+        print(f"Get user accounts error: {e}")
+        import traceback
+        traceback.print_exc()
+        return None
+    
+    print(f"DEBUG: No matching accounts found at end of function")
+    return None
 
     def process_transaction(self, userName, transType, amount, accountType):
-        """Process deposit or withdrawal"""
-        timeNew = time.asctime()
+    """Process deposit or withdrawal"""
+    timeNew = time.asctime()
+    
+    try:
+        if not os.path.exists('transactionData.txt'):
+            open('transactionData.txt', 'w').close()
         
-        try:
-            if not os.path.exists('transactionData.txt'):
-                open('transactionData.txt', 'w').close()
-            
-            user_accounts = self.get_user_accounts(userName)
-            if not user_accounts:
-                return False, "User account not found"
-            
-            # Read all accounts
-            with open('checking&SavingsData.txt', 'r') as f:
-                account_lines = f.readlines()
-            
-            updated_lines = []
-            transaction_made = False
-            
-            for line in account_lines:
-                parts = line.strip().split(' | ')
+        user_accounts = self.get_user_accounts(userName)
+        if not user_accounts:
+            print(f"DEBUG: process_transaction - User accounts not found for {userName}")
+            return False, "User account not found"
+        
+        print(f"DEBUG: process_transaction - User accounts: {user_accounts}")
+        
+        # Read all accounts
+        with open('checking&SavingsData.txt', 'r') as f:
+            account_lines = f.readlines()
+        
+        updated_lines = []
+        transaction_made = False
+        
+        for line in account_lines:
+            # Skip empty lines
+            if not line.strip():
+                continue
                 
-                if parts[0] == 'both' and len(parts) >= 5:
-                    checking_id = parts[3].strip()
-                    savings_id = parts[4].strip()
+            parts = [p.strip() for p in line.strip().split(' | ')]
+            
+            if parts[0] == 'both' and len(parts) >= 5:
+                checking_id = parts[3]
+                savings_id = parts[4]
+                
+                if checking_id == user_accounts.get('checkingId') and savings_id == user_accounts.get('savingsId'):
+                    checking_bal = float(parts[1])
+                    savings_bal = float(parts[2])
                     
-                    if checking_id == user_accounts.get('checkingId') and savings_id == user_accounts.get('savingsId'):
-                        checking_bal = float(parts[1])
-                        savings_bal = float(parts[2])
-                        
-                        if accountType == 'checking':
-                            if transType == 'deposit':
-                                checking_bal += float(amount)
-                            elif transType == 'withdraw':
-                                checking_bal -= float(amount)
-                        elif accountType == 'savings':
-                            if transType == 'deposit':
-                                savings_bal += float(amount)
-                            elif transType == 'withdraw':
-                                savings_bal -= float(amount)
-                        
-                        updated_lines.append(f"both | {checking_bal} | {savings_bal} | {checking_id} | {savings_id} | \n")
-                        transaction_made = True
-                    else:
-                        updated_lines.append(line)
-                        
-                elif parts[0] == 'checking' and len(parts) >= 3:
-                    checking_id = parts[2].strip()
+                    print(f"DEBUG: Found match - Current C: {checking_bal}, S: {savings_bal}")
                     
-                    if checking_id == user_accounts.get('checkingId'):
-                        balance = float(parts[1])
-                        
+                    if accountType == 'checking':
                         if transType == 'deposit':
-                            balance += float(amount)
+                            checking_bal += float(amount)
                         elif transType == 'withdraw':
-                            balance -= float(amount)
-                        
-                        updated_lines.append(f"checking | {balance} | {checking_id} | \n")
-                        transaction_made = True
-                    else:
-                        updated_lines.append(line)
-                        
-                elif parts[0] == 'savings' and len(parts) >= 3:
-                    savings_id = parts[2].strip()
-                    
-                    if savings_id == user_accounts.get('savingsId'):
-                        balance = float(parts[1])
-                        
+                            checking_bal -= float(amount)
+                    elif accountType == 'savings':
                         if transType == 'deposit':
-                            balance += float(amount)
+                            savings_bal += float(amount)
                         elif transType == 'withdraw':
-                            balance -= float(amount)
-                        
-                        updated_lines.append(f"savings | {balance} | {savings_id} | \n")
-                        transaction_made = True
-                    else:
-                        updated_lines.append(line)
+                            savings_bal -= float(amount)
+                    
+                    print(f"DEBUG: New balances - C: {checking_bal}, S: {savings_bal}")
+                    updated_lines.append(f"both | {checking_bal} | {savings_bal} | {checking_id} | {savings_id} | \n")
+                    transaction_made = True
                 else:
-                    updated_lines.append(line)
-            
-            if transaction_made:
-                with open('checking&SavingsData.txt', 'w') as f:
-                    f.writelines(updated_lines)
+                    updated_lines.append(line if line.endswith('\n') else line + '\n')
+                    
+            elif parts[0] == 'checking' and len(parts) >= 3:
+                checking_id = parts[2]
                 
-                with open('transactionData.txt', 'a') as f:
-                    f.write(f"{userName} | {transType} ${amount} to {accountType} | DATE OF TRANSACTION {timeNew}\n")
+                if checking_id == user_accounts.get('checkingId'):
+                    balance = float(parts[1])
+                    
+                    if transType == 'deposit':
+                        balance += float(amount)
+                    elif transType == 'withdraw':
+                        balance -= float(amount)
+                    
+                    print(f"DEBUG: New checking balance: {balance}")
+                    updated_lines.append(f"checking | {balance} | {checking_id} | \n")
+                    transaction_made = True
+                else:
+                    updated_lines.append(line if line.endswith('\n') else line + '\n')
+                    
+            elif parts[0] == 'savings' and len(parts) >= 3:
+                savings_id = parts[2]
                 
-                return True, f"{transType.capitalize()} of ${amount} successful"
-            
-            return False, "Transaction failed - account not matched"
+                if savings_id == user_accounts.get('savingsId'):
+                    balance = float(parts[1])
+                    
+                    if transType == 'deposit':
+                        balance += float(amount)
+                    elif transType == 'withdraw':
+                        balance -= float(amount)
+                    
+                    print(f"DEBUG: New savings balance: {balance}")
+                    updated_lines.append(f"savings | {balance} | {savings_id} | \n")
+                    transaction_made = True
+                else:
+                    updated_lines.append(line if line.endswith('\n') else line + '\n')
+            else:
+                updated_lines.append(line if line.endswith('\n') else line + '\n')
         
-        except Exception as e:
-            print(f"Transaction error: {e}")
-            return False, f"Error: {str(e)}"
+        if transaction_made:
+            print(f"DEBUG: Writing {len(updated_lines)} lines back to file")
+            with open('checking&SavingsData.txt', 'w') as f:
+                f.writelines(updated_lines)
+            
+            with open('transactionData.txt', 'a') as f:
+                f.write(f"{userName} | {transType} ${amount} to {accountType} | DATE OF TRANSACTION {timeNew}\n")
+            
+            return True, f"{transType.capitalize()} of ${amount} successful"
+        
+        print(f"DEBUG: No transaction made - no account match")
+        return False, "Transaction failed - account not matched"
+    
+    except Exception as e:
+        print(f"Transaction error: {e}")
+        import traceback
+        traceback.print_exc()
+        return False, f"Error: {str(e)}"
     
     def transfer_funds(self, userName, amount, fromAccount, toAccount):
         """Transfer between accounts"""
@@ -357,3 +398,4 @@ class Accounts:
         except Exception as e:
             print(f"Transaction history error: {e}")
             return []
+
