@@ -5,130 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ARK Banking - Dashboard</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  <style>
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      margin: 2rem 0;
-    }
-    
-    .balance-card {
-      background: linear-gradient(135deg, var(--celadon) 0%, var(--neon-green) 100%);
-      padding: 1.5rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      border: 2px solid var(--sage);
-    }
-    
-    .balance-card h3 {
-      color: var(--puce);
-      font-size: 1rem;
-      margin-bottom: 0.5rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    
-    .balance-amount {
-      font-size: 2rem;
-      font-weight: bold;
-      color: var(--puce);
-      margin: 0.5rem 0;
-    }
-    
-    .account-id {
-      font-size: 0.9rem;
-      color: var(--sage);
-    }
-    
-    .action-buttons {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-      margin: 2rem 0;
-    }
-    
-    .action-btn {
-      background: var(--sage);
-      color: var(--white);
-      padding: 1.5rem;
-      border-radius: 8px;
-      text-align: center;
-      text-decoration: none;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    
-    .action-btn:hover {
-      background: var(--puce);
-      transform: translateY(-3px);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-    }
-    
-    .action-btn span {
-      font-size: 2rem;
-    }
-    
-    .transactions-preview {
-      background: var(--light-gray);
-      padding: 1.5rem;
-      border-radius: 8px;
-      margin-top: 2rem;
-      border: 2px solid var(--border-color);
-    }
-    
-    .transaction-item {
-      padding: 1rem 0;
-      border-bottom: 1px solid var(--border-color);
-    }
-    
-    .transaction-item:last-child {
-      border-bottom: none;
-    }
-    
-    .user-greeting {
-      background: linear-gradient(90deg, var(--sage), var(--puce));
-      color: var(--white);
-      padding: 1.5rem;
-      border-radius: 8px;
-      margin-bottom: 2rem;
-    }
-    
-    .logout-btn {
-      background: transparent;
-      border: 2px solid var(--white);
-      color: var(--white);
-      padding: 0.5rem 1.5rem;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-      text-decoration: none;
-      display: inline-block;
-      margin-top: 1rem;
-    }
-    
-    .logout-btn:hover {
-      background: var(--white);
-      color: var(--puce);
-    }
-  </style>
 </head>
 <body>
-  <header>
-    ARK BANKING - DASHBOARD
-  </header>
-  
-  <div class="container">
-    <div class="user-greeting">
-      <h2>Welcome back, {{ user.firstName }} {{ user.lastName }}!</h2>
-      <p>Your account is secure and ready for transactions.</p>
-      <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+  <!-- Top Header -->
+  <div class="top-header">
+    <h1>ARK BANKING</h1>
+    <div class="user-info">
+      <span>Welcome, {{ user.firstName }} {{ user.lastName }}</span>
+      <a href="{{ url_for('logout') }}" class="logout-link">Sign out</a>
     </div>
-    
+  </div>
+
+  <!-- Navigation Tabs -->
+  <nav class="nav-tabs">
+    <div class="nav-tabs-container">
+      <a href="{{ url_for('dashboard') }}" class="nav-tab active">Accounts</a>
+      <a href="{{ url_for('transactions') }}" class="nav-tab">Transactions</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Secondary Navigation -->
+    <div class="secondary-nav">
+      <a href="#" class="secondary-nav-link active">Overview</a>
+    </div>
+
+    <!-- Alerts -->
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         {% for category, message in messages %}
@@ -138,72 +41,74 @@
         {% endfor %}
       {% endif %}
     {% endwith %}
-    
-    <h2>Your Account Balances</h2>
-    <div class="dashboard-grid">
-      {% if accounts %}
-        {% if accounts.checkingId %}
-        <div class="balance-card">
-          <h3>Checking Account</h3>
-          <div class="balance-amount">${{ "%.2f"|format(accounts.checkingBalance) }}</div>
-          <div class="account-id">ID: {{ accounts.checkingId }}</div>
-        </div>
-        {% endif %}
+
+    <!-- Bank Accounts Section -->
+    {% if accounts %}
+      {% if accounts.checkingId %}
+      <div class="account-card">
+        <a href="#" class="account-name">ARK CHECKING (...{{accounts.checkingId[-4:]}})</a>
         
-        {% if accounts.savingsId %}
-        <div class="balance-card">
-          <h3>Savings Account</h3>
-          <div class="balance-amount">${{ "%.2f"|format(accounts.savingsBalance) }}</div>
-          <div class="account-id">ID: {{ accounts.savingsId }}</div>
+        <div class="balance-row">
+          <div>
+            <div class="balance-amount {% if accounts.checkingBalance >= 0 %}positive{% else %}negative{% endif %}">
+              ${{ "%.2f"|format(accounts.checkingBalance) }}
+            </div>
+            <div class="balance-label">Available balance</div>
+          </div>
         </div>
-        {% endif %}
-      {% else %}
-        <div class="balance-card">
-          <h3>No Accounts Found</h3>
-          <p>Please contact support.</p>
+
+        <div class="account-actions">
+          <a href="{{ url_for('deposit') }}" class="btn-primary">Deposit</a>
+          <a href="{{ url_for('withdraw') }}" class="btn-secondary">Withdraw</a>
+          {% if accounts.type == 'both' %}
+          <a href="{{ url_for('transfer') }}" class="btn-secondary">Transfer</a>
+          {% endif %}
         </div>
+      </div>
       {% endif %}
-    </div>
-    
-    <h2>Quick Actions</h2>
-    <div class="action-buttons">
-      <a href="{{ url_for('deposit') }}" class="action-btn">
-        <span>💰</span>
-        Deposit Money
-      </a>
-      <a href="{{ url_for('withdraw') }}" class="action-btn">
-        <span>💸</span>
-        Withdraw Money
-      </a>
-      {% if accounts and accounts.type == 'both' %}
-      <a href="{{ url_for('transfer') }}" class="action-btn">
-        <span>🔄</span>
-        Transfer Funds
-      </a>
+
+      {% if accounts.savingsId %}
+      <div class="account-card">
+        <a href="#" class="account-name">ARK SAVINGS (...{{accounts.savingsId[-4:]}})</a>
+        
+        <div class="balance-row">
+          <div>
+            <div class="balance-amount {% if accounts.savingsBalance >= 0 %}positive{% else %}negative{% endif %}">
+              ${{ "%.2f"|format(accounts.savingsBalance) }}
+            </div>
+            <div class="balance-label">Available balance</div>
+          </div>
+        </div>
+
+        <div class="account-actions">
+          <a href="{{ url_for('deposit') }}" class="btn-primary">Deposit</a>
+          <a href="{{ url_for('withdraw') }}" class="btn-secondary">Withdraw</a>
+          {% if accounts.type == 'both' %}
+          <a href="{{ url_for('transfer') }}" class="btn-secondary">Transfer</a>
+          {% endif %}
+        </div>
+      </div>
       {% endif %}
-      <a href="{{ url_for('transactions') }}" class="action-btn">
-        <span>📊</span>
-        View Transactions
-      </a>
-    </div>
-    
+    {% else %}
+      <div class="account-card">
+        <p>No accounts found. Please contact support.</p>
+      </div>
+    {% endif %}
+
+    <!-- Recent Transactions -->
     {% if transactions %}
-    <div class="transactions-preview">
+    <div class="transactions-section">
       <h3>Recent Transactions</h3>
       {% for trans in transactions[:5] %}
       <div class="transaction-item">
-        {{ trans }}
+        <div>{{ trans }}</div>
       </div>
       {% endfor %}
-      <div class="text-center mt-2">
-        <a href="{{ url_for('transactions') }}" style="color: var(--sage); font-weight: 600;">View All Transactions</a>
+      <div class="text-center" style="margin-top: 1rem;">
+        <a href="{{ url_for('transactions') }}" class="link-button">View all transactions</a>
       </div>
     </div>
     {% endif %}
   </div>
-  
-  <footer>
-    &copy; 2025 ARK Banking. All Rights Reserved.
-  </footer>
 </body>
 </html>
