@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARK Banking - Withdraw</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <!-- Top Header -->
+  <div class="top-header">
+    <h1>ARK BANKING</h1>
+    <div class="user-info">
+      <a href="{{ url_for('dashboard') }}" class="logout-link">← Back to Dashboard</a>
+    </div>
+  </div>
+
+  <!-- Navigation Tabs -->
+  <nav class="nav-tabs">
+    <div class="nav-tabs-container">
+      <a href="{{ url_for('dashboard') }}" class="nav-tab">Accounts</a>
+      <a href="{{ url_for('transactions') }}" class="nav-tab">Transactions</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="account-card" style="max-width: 600px; margin: 0 auto;">
+      <h2 style="margin-bottom: 0.5rem; color: var(--text-dark);">Withdraw Funds</h2>
+      <p style="color: var(--text-medium); margin-bottom: 2rem;">Safely withdraw money from your account</p>
+      
+      <form action="{{ url_for('withdraw') }}" method="POST">
+        <div class="form-group">
+          <label>Amount to Withdraw</label>
+          <input type="number" name="amount" placeholder="0.00" min="0.01" step="0.01" required style="font-size: 1.25rem; padding: 1rem;">
+        </div>
+        
+        <div class="form-group">
+          <label>Withdraw From</label>
+          <div class="radio-group">
+            {% if accounts.checkingId %}
+            <div>
+              <input type="radio" id="checking" name="accountType" value="checking" required>
+              <label for="checking">Checking (Balance: ${{ "%.2f"|format(accounts.checkingBalance) }})</label>
+            </div>
+            {% endif %}
+            
+            {% if accounts.savingsId %}
+            <div>
+              <input type="radio" id="savings" name="accountType" value="savings" {% if not accounts.checkingId %}required{% endif %}>
+              <label for="savings">Savings (Balance: ${{ "%.2f"|format(accounts.savingsBalance) }})</label>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        
+        <button type="submit">Complete Withdrawal</button>
+        
+        <div class="text-center" style="margin-top: 1rem;">
+          <a href="{{ url_for('dashboard') }}" class="link-button">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 ARK Banking. All Rights Reserved.
+  </footer>
+</body>
+</html>
