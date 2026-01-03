@@ -3,33 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ARK Banking System</title>
-  <link rel="stylesheet"  href="{{ url_for('static', filename='style.css') }}">
+  <title>ARK Banking - Login</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
   <header>
     ARK BANKING SYSTEM
   </header>
-
+  
   <div class="container">
     <h2>Welcome to Your Secure Digital Banking Experience</h2>
     <p>Manage your accounts, deposits, and transactions with ease.</p>
-
-    <form method="POST">
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    
+    <form action="{{ url_for('login') }}" method="POST">
         <label>Username:</label>
-        <input type="text" name="name" required><br><br>
-
-        <label>Passcode:</label>
-        <input type="text" name="ssn" required><br><br>
-
+        <input type="text" name="username" required>
+        
+        <label>Password:</label>
+        <input type="password" name="password" required>
+        
         <button type="submit">Login</button>
     </form>
-
+    
     <div class="menu">
-      <a href="{{ url_for('create_account') }}"> Create Account</a>
+      <a href="{{ url_for('create_account') }}">Create New Account</a>
     </div>
   </div>
-
+  
   <footer>
     &copy; 2025 ARK Banking. All Rights Reserved.
   </footer>
