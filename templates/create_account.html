@@ -7,93 +7,116 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <header>
-    ARK BANKING - CREATE ACCOUNT
-  </header>
-  
-  <div class="container">
-    <h2>Open Your ARK Banking Account Today</h2>
-    <p>Join thousands of satisfied customers managing their finances securely.</p>
-    
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        {% for category, message in messages %}
-          <div class="alert alert-{{ category }}">
-            {{ message }}
-          </div>
-        {% endfor %}
-      {% endif %}
-    {% endwith %}
-    
-    <form action="{{ url_for('create_account') }}" method="POST">
-      <label>Username:</label>
-      <input type="text" name="userName" required>
-      
-      <label>Password:</label>
-      <input type="password" name="password" required>
-      
-      <label>First Name:</label>
-      <input type="text" name="firstName" required>
-      
-      <label>Last Name:</label>
-      <input type="text" name="lastName" required>
-      
-      <label>Gender:</label>
-      <div class="radio-group">
-        <div>
-          <input type="radio" id="male" name="gender" value="Male" required>
-          <label for="male">Male</label>
-        </div>
-        <div>
-          <input type="radio" id="female" name="gender" value="Female">
-          <label for="female">Female</label>
-        </div>
-        <div>
-          <input type="radio" id="other" name="gender" value="Other">
-          <label for="other">Other</label>
-        </div>
+  <div class="login-container">
+    <div class="login-card" style="max-width: 600px;">
+      <div class="login-logo">
+        <h1>ARK</h1>
+        <p>Banking Reimagined</p>
       </div>
       
-      <label>Date of Birth:</label>
-      <input type="date" name="dob" required>
+      <h2>Create Your Account</h2>
+      <p>Join thousands of satisfied customers managing their finances securely</p>
       
-      <label>Social Security Number:</label>
-      <input type="text" name="ssn" placeholder="XXX-XX-XXXX" required>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
       
-      <label>Annual Income:</label>
-      <input type="number" name="income" placeholder="50000" required>
-      
-      <div class="account-options">
-        <label>Account Type:</label>
-        <div class="radio-group">
-          <div>
-            <input type="radio" id="checking" name="accountType" value="checking" required onclick="showDepositFields()">
-            <label for="checking">Checking Only</label>
+      <form action="{{ url_for('create_account') }}" method="POST">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" name="firstName" required>
           </div>
-          <div>
-            <input type="radio" id="savings" name="accountType" value="savings" onclick="showDepositFields()">
-            <label for="savings">Savings Only</label>
-          </div>
-          <div>
-            <input type="radio" id="both" name="accountType" value="both" onclick="showDepositFields()">
-            <label for="both">Both Accounts</label>
+          
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" name="lastName" required>
           </div>
         </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label>Username</label>
+            <input type="text" name="userName" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" name="password" required>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>Gender</label>
+          <div class="radio-group">
+            <div>
+              <input type="radio" id="male" name="gender" value="Male" required>
+              <label for="male">Male</label>
+            </div>
+            <div>
+              <input type="radio" id="female" name="gender" value="Female">
+              <label for="female">Female</label>
+            </div>
+            <div>
+              <input type="radio" id="other" name="gender" value="Other">
+              <label for="other">Other</label>
+            </div>
+          </div>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label>Date of Birth</label>
+            <input type="date" name="dob" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Annual Income</label>
+            <input type="number" name="income" placeholder="50000" required>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>Social Security Number</label>
+          <input type="text" name="ssn" placeholder="XXX-XX-XXXX" required>
+        </div>
+        
+        <div class="account-options">
+          <label>Account Type</label>
+          <div class="radio-group">
+            <div>
+              <input type="radio" id="checking" name="accountType" value="checking" required onclick="showDepositFields()">
+              <label for="checking">Checking Only</label>
+            </div>
+            <div>
+              <input type="radio" id="savings" name="accountType" value="savings" onclick="showDepositFields()">
+              <label for="savings">Savings Only</label>
+            </div>
+            <div>
+              <input type="radio" id="both" name="accountType" value="both" onclick="showDepositFields()">
+              <label for="both">Both Accounts</label>
+            </div>
+          </div>
+        </div>
+        
+        <div id="depositFields"></div>
+        
+        <button type="submit">Create Account</button>
+      </form>
+      
+      <div class="text-center">
+        <a href="{{ url_for('home') }}" class="link-button">
+          Already have an account? Sign in
+        </a>
       </div>
-      
-      <div id="depositFields"></div>
-      
-      <button type="submit">Create Account</button>
-    </form>
-    
-    <div class="menu">
-      <a href="{{ url_for('home') }}">Back to Login</a>
     </div>
   </div>
-  
-  <footer>
-    &copy; 2025 ARK Banking. All Rights Reserved.
-  </footer>
   
   <script>
     function showDepositFields() {
@@ -104,21 +127,31 @@
       
       if (accountType === 'checking') {
         html = `
-          <label>Initial Checking Deposit:</label>
-          <input type="number" name="checking" placeholder="0" min="0" step="0.01" required>
+          <div class="form-group">
+            <label>Initial Checking Deposit</label>
+            <input type="number" name="checking" placeholder="0.00" min="0" step="0.01" required>
+          </div>
         `;
       } else if (accountType === 'savings') {
         html = `
-          <label>Initial Savings Deposit:</label>
-          <input type="number" name="savings" placeholder="0" min="0" step="0.01" required>
+          <div class="form-group">
+            <label>Initial Savings Deposit</label>
+            <input type="number" name="savings" placeholder="0.00" min="0" step="0.01" required>
+          </div>
         `;
       } else if (accountType === 'both') {
         html = `
-          <label>Initial Checking Deposit:</label>
-          <input type="number" name="checking" placeholder="0" min="0" step="0.01" required>
-          
-          <label>Initial Savings Deposit:</label>
-          <input type="number" name="savings" placeholder="0" min="0" step="0.01" required>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label>Initial Checking Deposit</label>
+              <input type="number" name="checking" placeholder="0.00" min="0" step="0.01" required>
+            </div>
+            
+            <div class="form-group">
+              <label>Initial Savings Deposit</label>
+              <input type="number" name="savings" placeholder="0.00" min="0" step="0.01" required>
+            </div>
+          </div>
         `;
       }
       
