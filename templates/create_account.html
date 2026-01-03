@@ -3,75 +3,127 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Create Account | ARK Banking</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> 
+  <title>ARK Banking - Create Account</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
   <header>
-    ARK Banking
+    ARK BANKING - CREATE ACCOUNT
   </header>
-
-  <main class="container">
-    <h1>Create an Account</h1>
-    <p>Fill out the information below to open your ARK Banking account.</p>
-
-    <form action="/create_account" method="POST">
-
-      <label for="userName">Create a Username</label>
-      <input type="text" id="userName" name="userName" required>
-
-      <label for="password">Create prefered Password</label>
-      <input type="text" id="password" name="password" required>
+  
+  <div class="container">
+    <h2>Open Your ARK Banking Account Today</h2>
+    <p>Join thousands of satisfied customers managing their finances securely.</p>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    
+    <form action="{{ url_for('create_account') }}" method="POST">
+      <label>Username:</label>
+      <input type="text" name="userName" required>
       
-      <label for="firstName">First Name</label>
-      <input type="text" id="firstName" name="firstName" required>
-
-      <label for="lastName">Last Name</label>
-      <input type="text" id="lastName" name="lastName" required>
-
-      <label for="gender">Gender</label>
-      <select id="gender" name="gender" required>
-        <option value="">Select...</option>
-        <option>Male</option>
-        <option>Female</option>
-        <option>Other</option>
-      </select>
-
-      <label for="dob">Date of Birth</label>
-      <input type="date" id="dob" name="dob" required>
-
-      <label for="ssn">SSN</label>
-      <input type="text" id="ssn" name="ssn" required>
-
-      <label for="income">Annual Income</label>
-      <input type="number" id="income" name="income" required>
-
+      <label>Password:</label>
+      <input type="password" name="password" required>
+      
+      <label>First Name:</label>
+      <input type="text" name="firstName" required>
+      
+      <label>Last Name:</label>
+      <input type="text" name="lastName" required>
+      
+      <label>Gender:</label>
+      <div class="radio-group">
+        <div>
+          <input type="radio" id="male" name="gender" value="Male" required>
+          <label for="male">Male</label>
+        </div>
+        <div>
+          <input type="radio" id="female" name="gender" value="Female">
+          <label for="female">Female</label>
+        </div>
+        <div>
+          <input type="radio" id="other" name="gender" value="Other">
+          <label for="other">Other</label>
+        </div>
+      </div>
+      
+      <label>Date of Birth:</label>
+      <input type="date" name="dob" required>
+      
+      <label>Social Security Number:</label>
+      <input type="text" name="ssn" placeholder="XXX-XX-XXXX" required>
+      
+      <label>Annual Income:</label>
+      <input type="number" name="income" placeholder="50000" required>
+      
       <div class="account-options">
-  <label>Account Type</label>
-  <div class="radio-group">
-    <div><input type="radio" id="checking" name="cOrS" value="checking" required><label for="checking">Checking</label></div>
-    <div><input type="radio" id="savings" name="cOrS" value="savings"><label for="savings">Savings</label></div>
-    <div><input type="radio" id="both" name="cOrS" value="both"><label for="both">Both</label></div>
-  </div>
-</div>
-
-
-      <label for="checkingDeposit">Initial Checking Deposit</label>
-      <input type="number" id="checkingDeposit" name="checking" placeholder="Enter 0 if none">
-
-      <label for="savingsDeposit">Initial Savings Deposit</label>
-      <input type="number" id="savingsDeposit" name="savings" placeholder="Enter 0 if none">
-
+        <label>Account Type:</label>
+        <div class="radio-group">
+          <div>
+            <input type="radio" id="checking" name="accountType" value="checking" required onclick="showDepositFields()">
+            <label for="checking">Checking Only</label>
+          </div>
+          <div>
+            <input type="radio" id="savings" name="accountType" value="savings" onclick="showDepositFields()">
+            <label for="savings">Savings Only</label>
+          </div>
+          <div>
+            <input type="radio" id="both" name="accountType" value="both" onclick="showDepositFields()">
+            <label for="both">Both Accounts</label>
+          </div>
+        </div>
+      </div>
+      
+      <div id="depositFields"></div>
+      
       <button type="submit">Create Account</button>
     </form>
-
-    <div class="menu mt-2">
-      <a href="index.html">Already have an Account?</a>
+    
+    <div class="menu">
+      <a href="{{ url_for('home') }}">Back to Login</a>
     </div>
-  </main>
-
+  </div>
+  
   <footer>
-    &copy; 2025 ARK Banking. All rights reserved.
+    &copy; 2025 ARK Banking. All Rights Reserved.
   </footer>
+  
+  <script>
+    function showDepositFields() {
+      const accountType = document.querySelector('input[name="accountType"]:checked').value;
+      const depositFields = document.getElementById('depositFields');
+      
+      let html = '';
+      
+      if (accountType === 'checking') {
+        html = `
+          <label>Initial Checking Deposit:</label>
+          <input type="number" name="checking" placeholder="0" min="0" step="0.01" required>
+        `;
+      } else if (accountType === 'savings') {
+        html = `
+          <label>Initial Savings Deposit:</label>
+          <input type="number" name="savings" placeholder="0" min="0" step="0.01" required>
+        `;
+      } else if (accountType === 'both') {
+        html = `
+          <label>Initial Checking Deposit:</label>
+          <input type="number" name="checking" placeholder="0" min="0" step="0.01" required>
+          
+          <label>Initial Savings Deposit:</label>
+          <input type="number" name="savings" placeholder="0" min="0" step="0.01" required>
+        `;
+      }
+      
+      depositFields.innerHTML = html;
+    }
+  </script>
 </body>
 </html>
