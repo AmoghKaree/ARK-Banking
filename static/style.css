@@ -84,18 +84,10 @@ body {
   gap: 0.75rem;
 }
 
-.logo-circle {
+.logo-image {
   width: 48px;
   height: 48px;
-  background-color: var(--white);
-  color: var(--orange-primary);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: var(--font-weight-bold);
-  font-size: 1.125rem;
-  letter-spacing: -0.5px;
+  object-fit: contain;
 }
 
 .logo-text {
