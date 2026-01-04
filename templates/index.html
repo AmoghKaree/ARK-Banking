@@ -5,13 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ARK Banking - Sign In</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
 </head>
 <body>
   <!-- Professional Header -->
   <header class="main-header">
     <div class="header-container">
       <div class="header-logo">
-        <div class="logo-circle">ARK</div>
+        <!-- Your custom logo -->
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="ARK Banking Logo" class="logo-image">
         <span class="logo-text">ARK BANKING</span>
       </div>
       <nav class="header-nav">
