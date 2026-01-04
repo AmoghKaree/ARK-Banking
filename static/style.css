@@ -5,37 +5,65 @@
 }
 
 :root {
-  /* Magenta Color Palette */
-  --primary-magenta: #D946EF;
-  --light-magenta: #F0ABFC;
-  --pale-magenta: #FAE8FF;
-  --dark-magenta: #A21CAF;
-  --deep-purple: #6B21A8;
+  /* Orange Palette - Warm and Professional */
+  --orange-primary: #FF8C42;
+  --orange-light: #FFB077;
+  --orange-pale: #FFF4E6;
+  --orange-dark: #E67E22;
+  --orange-deep: #D35400;
   
-  /* Neutral Colors */
-  --white: #ffffff;
-  --cream: #FEFCF9;
-  --light-gray: #F9FAFB;
-  --border-color: #E5E7EB;
-  --text-dark: #1F2937;
-  --text-medium: #6B7280;
-  --text-light: #9CA3AF;
+  /* Neutrals */
+  --white: #FFFFFF;
+  --cream: #FFFAF5;
+  --gray-50: #F9FAFB;
+  --gray-100: #F3F4F6;
+  --gray-200: #E5E7EB;
+  --gray-300: #D1D5DB;
+  --gray-600: #4B5563;
+  --gray-700: #374151;
+  --gray-900: #111827;
   
-  /* Accent Colors */
-  --success: #10B981;
-  --error: #EF4444;
-  --warning: #F59E0B;
-}
-
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background-color: var(--cream);
-  color: var(--text-dark);
-  line-height: 1.6;
+  /* Functional */
+  --success: #059669;
+  --error: #DC2626;
+  --border: #E5E7EB;
+  
+  /* Typography */
+  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  /* Consistent Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  
+  /* Consistent Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
 }
 
 /* ============================================
-   LOGIN PAGE STYLING
+   BASE STYLES
+   ============================================ */
+
+body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: var(--font-weight-normal);
+  line-height: 1.5;
+  color: var(--gray-900);
+  background-color: var(--cream);
+}
+
+/* ============================================
+   LOGIN PAGE
    ============================================ */
 
 .login-container {
@@ -43,168 +71,109 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #FAE8FF 0%, #F0ABFC 50%, #E9D5FF 100%);
-  padding: 2rem;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Decorative background elements */
-.login-container::before {
-  content: '';
-  position: absolute;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(217, 70, 239, 0.15) 0%, transparent 70%);
-  border-radius: 50%;
-  top: -200px;
-  right: -200px;
-  animation: float 20s ease-in-out infinite;
-}
-
-.login-container::after {
-  content: '';
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(162, 28, 175, 0.1) 0%, transparent 70%);
-  border-radius: 50%;
-  bottom: -150px;
-  left: -150px;
-  animation: float 15s ease-in-out infinite reverse;
-}
-
-@keyframes float {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  50% { transform: translate(30px, 30px) rotate(180deg); }
+  background-color: var(--orange-pale);
+  padding: var(--space-xl);
 }
 
 .login-card {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px);
-  border-radius: 24px;
-  padding: 3rem 2.5rem;
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2xl);
   width: 100%;
-  max-width: 440px;
-  box-shadow: 0 20px 60px rgba(217, 70, 239, 0.15),
-              0 0 0 1px rgba(217, 70, 239, 0.1);
-  position: relative;
-  z-index: 1;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.login-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 25px 70px rgba(217, 70, 239, 0.2),
-              0 0 0 1px rgba(217, 70, 239, 0.15);
+  max-width: 420px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border);
 }
 
 .login-logo {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: var(--space-xl);
 }
 
 .login-logo h1 {
-  font-size: 2.5rem;
-  font-weight: 800;
-  background: linear-gradient(135deg, var(--primary-magenta), var(--deep-purple));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 0.5rem;
-  letter-spacing: -0.5px;
+  font-size: 2rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--orange-primary);
+  margin-bottom: var(--space-sm);
 }
 
 .login-logo p {
-  color: var(--text-medium);
-  font-size: 1rem;
-  font-weight: 500;
+  font-size: 0.875rem;
+  color: var(--gray-600);
+  font-weight: var(--font-weight-medium);
 }
 
 .login-card h2 {
   font-size: 1.5rem;
-  color: var(--text-dark);
-  margin-bottom: 0.5rem;
-  font-weight: 700;
+  font-weight: var(--font-weight-semibold);
+  color: var(--gray-900);
+  margin-bottom: var(--space-sm);
 }
 
 .login-card > p {
-  color: var(--text-medium);
-  margin-bottom: 2rem;
-  font-size: 0.95rem;
+  font-size: 0.875rem;
+  color: var(--gray-600);
+  margin-bottom: var(--space-xl);
 }
 
 /* ============================================
-   FORM STYLING
+   FORMS
    ============================================ */
 
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-lg);
 }
 
 .form-group label {
   display: block;
-  font-weight: 600;
-  color: var(--text-dark);
-  margin-bottom: 0.5rem;
-  font-size: 0.95rem;
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-medium);
+  color: var(--gray-700);
+  margin-bottom: var(--space-sm);
 }
 
 .form-group input,
 .form-group select {
   width: 100%;
-  padding: 0.875rem 1rem;
-  border: 2px solid var(--border-color);
-  border-radius: 12px;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-  background: var(--white);
-  color: var(--text-dark);
+  padding: 0.625rem var(--space-md);
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-normal);
+  line-height: 1.5;
+  color: var(--gray-900);
+  background-color: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: border-color 0.15s ease;
 }
 
 .form-group input:focus,
 .form-group select:focus {
   outline: none;
-  border-color: var(--primary-magenta);
-  box-shadow: 0 0 0 4px rgba(217, 70, 239, 0.1);
-  background: var(--white);
-}
-
-.form-group select option {
-  background: var(--white);
-  color: var(--text-dark);
+  border-color: var(--orange-primary);
 }
 
 button[type="submit"] {
   width: 100%;
-  padding: 1rem;
-  background: linear-gradient(135deg, var(--primary-magenta), var(--dark-magenta));
+  padding: 0.625rem var(--space-md);
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-semibold);
   color: var(--white);
+  background-color: var(--orange-primary);
   border: none;
-  border-radius: 12px;
-  font-size: 1rem;
-  font-weight: 700;
+  border-radius: var(--radius-md);
   cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 0.5rem;
-  box-shadow: 0 4px 12px rgba(217, 70, 239, 0.3);
+  transition: background-color 0.15s ease;
 }
 
 button[type="submit"]:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(217, 70, 239, 0.4);
-}
-
-button[type="submit"]:active {
-  transform: translateY(0);
+  background-color: var(--orange-dark);
 }
 
 /* Radio Buttons */
 .radio-group {
   display: flex;
-  gap: 1.5rem;
+  gap: var(--space-lg);
   flex-wrap: wrap;
-  margin-top: 0.75rem;
 }
 
 .radio-group div {
@@ -213,200 +182,176 @@ button[type="submit"]:active {
 }
 
 .radio-group input[type="radio"] {
-  width: auto;
-  margin-right: 0.5rem;
+  width: 16px;
+  height: 16px;
+  margin-right: var(--space-sm);
   cursor: pointer;
-  accent-color: var(--primary-magenta);
-  width: 18px;
-  height: 18px;
+  accent-color: var(--orange-primary);
 }
 
 .radio-group label {
   margin-bottom: 0;
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-normal);
   cursor: pointer;
-  font-weight: 500;
-  color: var(--text-dark);
 }
 
-/* Account Options */
 .account-options {
-  background: linear-gradient(135deg, var(--pale-magenta), rgba(250, 232, 255, 0.5));
-  padding: 1.5rem;
-  border-radius: 12px;
-  margin: 1rem 0;
-  border: 1px solid rgba(217, 70, 239, 0.2);
+  background-color: var(--orange-pale);
+  padding: var(--space-lg);
+  border-radius: var(--radius-md);
+  margin: var(--space-md) 0;
+  border: 1px solid var(--border);
 }
 
 /* ============================================
-   DASHBOARD STYLING
+   DASHBOARD HEADER
    ============================================ */
 
-/* Top Header */
 .top-header {
-  background: linear-gradient(135deg, var(--primary-magenta), var(--dark-magenta));
+  background-color: var(--orange-primary);
   color: var(--white);
-  padding: 1rem 2rem;
+  padding: var(--space-md) var(--space-xl);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 4px 12px rgba(217, 70, 239, 0.2);
 }
 
 .top-header h1 {
-  font-size: 1.75rem;
-  font-weight: 800;
-  letter-spacing: -0.5px;
+  font-size: 1.25rem;
+  font-weight: var(--font-weight-bold);
 }
 
 .user-info {
   display: flex;
-  gap: 1.5rem;
+  gap: var(--space-lg);
   align-items: center;
-  font-weight: 500;
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-medium);
 }
 
 .logout-link {
   color: var(--white);
   text-decoration: none;
-  padding: 0.5rem 1.25rem;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 8px;
-  font-weight: 600;
-  transition: all 0.3s ease;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-medium);
+  transition: background-color 0.15s ease;
 }
 
 .logout-link:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: var(--white);
-  transform: translateY(-2px);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* Navigation Tabs */
+/* ============================================
+   NAVIGATION
+   ============================================ */
+
 .nav-tabs {
-  background: var(--white);
-  border-bottom: 2px solid var(--border-color);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  background-color: var(--white);
+  border-bottom: 1px solid var(--border);
 }
 
 .nav-tabs-container {
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 var(--space-xl);
   display: flex;
+  gap: var(--space-lg);
 }
 
 .nav-tab {
-  padding: 1.25rem 2rem;
-  color: var(--text-medium);
+  padding: var(--space-md) 0;
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-medium);
+  color: var(--gray-600);
   text-decoration: none;
-  font-weight: 600;
-  border-bottom: 3px solid transparent;
-  transition: all 0.3s ease;
-  font-size: 0.95rem;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s ease;
 }
 
 .nav-tab:hover {
-  color: var(--primary-magenta);
-  background: var(--pale-magenta);
+  color: var(--gray-900);
 }
 
 .nav-tab.active {
-  color: var(--primary-magenta);
-  border-bottom-color: var(--primary-magenta);
-  background: linear-gradient(to bottom, transparent, var(--pale-magenta));
+  color: var(--orange-primary);
+  border-bottom-color: var(--orange-primary);
 }
 
-/* Main Content */
+/* ============================================
+   MAIN CONTENT
+   ============================================ */
+
 .main-content {
-  max-width: 1400px;
-  margin: 2.5rem auto;
-  padding: 0 2rem;
+  max-width: 1200px;
+  margin: var(--space-xl) auto;
+  padding: 0 var(--space-xl);
 }
 
-/* Secondary Navigation */
 .secondary-nav {
-  background: var(--white);
-  border-radius: 16px;
-  padding: 1.25rem 2rem;
-  margin-bottom: 2rem;
+  background-color: var(--white);
+  border-radius: var(--radius-md);
+  padding: var(--space-md) var(--space-lg);
+  margin-bottom: var(--space-xl);
   display: flex;
-  gap: 2rem;
-  box-shadow: 0 2px 8px rgba(217, 70, 239, 0.08);
-  border: 1px solid rgba(217, 70, 239, 0.1);
+  gap: var(--space-lg);
+  border: 1px solid var(--border);
 }
 
 .secondary-nav-link {
-  color: var(--text-medium);
+  padding-bottom: var(--space-sm);
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-medium);
+  color: var(--gray-600);
   text-decoration: none;
-  padding-bottom: 0.5rem;
-  border-bottom: 3px solid transparent;
-  font-weight: 600;
-  transition: all 0.3s ease;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s ease;
 }
 
 .secondary-nav-link:hover {
-  color: var(--primary-magenta);
+  color: var(--gray-900);
 }
 
 .secondary-nav-link.active {
-  color: var(--primary-magenta);
-  border-bottom-color: var(--primary-magenta);
+  color: var(--orange-primary);
+  border-bottom-color: var(--orange-primary);
 }
 
-/* Account Cards */
+/* ============================================
+   ACCOUNT CARDS
+   ============================================ */
+
 .account-card {
-  background: var(--white);
-  border-radius: 20px;
-  padding: 2rem 2.5rem;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 4px 16px rgba(217, 70, 239, 0.1);
-  border: 1px solid rgba(217, 70, 239, 0.15);
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.account-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--primary-magenta), var(--light-magenta));
-}
-
-.account-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(217, 70, 239, 0.15);
+  background-color: var(--white);
+  border-radius: var(--radius-md);
+  padding: var(--space-xl);
+  margin-bottom: var(--space-lg);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--orange-primary);
 }
 
 .account-name {
-  color: var(--primary-magenta);
-  font-size: 1.1rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  font-weight: var(--font-weight-semibold);
+  color: var(--orange-primary);
   text-decoration: none;
   display: inline-block;
-  letter-spacing: 0.5px;
-}
-
-.account-name:hover {
-  color: var(--dark-magenta);
+  margin-bottom: var(--space-lg);
 }
 
 .balance-row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 2rem;
-  align-items: flex-end;
+  margin-bottom: var(--space-xl);
 }
 
 .balance-amount {
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: var(--text-dark);
-  letter-spacing: -1px;
+  font-size: 2rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--gray-900);
 }
 
 .balance-amount.positive {
@@ -418,170 +363,171 @@ button[type="submit"]:active {
 }
 
 .balance-label {
-  font-size: 0.9rem;
-  color: var(--text-medium);
-  margin-top: 0.5rem;
-  font-weight: 600;
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-medium);
+  color: var(--gray-600);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.05em;
+  margin-top: var(--space-sm);
 }
 
-/* Account Actions */
 .account-actions {
   display: flex;
-  gap: 1rem;
+  gap: var(--space-md);
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary-magenta), var(--dark-magenta));
+  padding: 0.625rem var(--space-lg);
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-semibold);
   color: var(--white);
-  padding: 0.75rem 1.75rem;
+  background-color: var(--orange-primary);
   border: none;
-  border-radius: 12px;
-  font-weight: 700;
-  cursor: pointer;
+  border-radius: var(--radius-md);
   text-decoration: none;
-  display: inline-block;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(217, 70, 239, 0.3);
-  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(217, 70, 239, 0.4);
+  background-color: var(--orange-dark);
 }
 
 .btn-secondary {
-  background: var(--white);
-  color: var(--primary-magenta);
-  padding: 0.75rem 1.75rem;
-  border: 2px solid var(--primary-magenta);
-  border-radius: 12px;
-  font-weight: 700;
-  cursor: pointer;
+  padding: 0.625rem var(--space-lg);
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-semibold);
+  color: var(--orange-primary);
+  background-color: var(--white);
+  border: 1px solid var(--orange-primary);
+  border-radius: var(--radius-md);
   text-decoration: none;
-  display: inline-block;
-  transition: all 0.3s ease;
-  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
 }
 
 .btn-secondary:hover {
-  background: var(--pale-magenta);
-  transform: translateY(-2px);
+  background-color: var(--orange-pale);
 }
 
-/* Transactions Section */
+/* ============================================
+   TRANSACTIONS
+   ============================================ */
+
 .transactions-section {
-  background: var(--white);
-  border-radius: 20px;
-  padding: 2rem;
-  box-shadow: 0 4px 16px rgba(217, 70, 239, 0.1);
-  border: 1px solid rgba(217, 70, 239, 0.15);
+  background-color: var(--white);
+  border-radius: var(--radius-md);
+  padding: var(--space-xl);
+  border: 1px solid var(--border);
 }
 
 .transactions-section h3 {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: var(--text-dark);
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 2px solid var(--border-color);
+  font-size: 1.125rem;
+  font-weight: var(--font-weight-semibold);
+  color: var(--gray-900);
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--border);
 }
 
 .transaction-item {
-  padding: 1.25rem 0;
-  border-bottom: 1px solid var(--border-color);
-  color: var(--text-medium);
-  font-size: 0.95rem;
+  padding: var(--space-md) 0;
+  font-size: 0.875rem;
+  color: var(--gray-600);
+  border-bottom: 1px solid var(--gray-100);
 }
 
 .transaction-item:last-child {
   border-bottom: none;
 }
 
-/* Alerts */
+/* ============================================
+   ALERTS
+   ============================================ */
+
 .alert {
-  padding: 1rem 1.5rem;
-  border-radius: 12px;
-  margin-bottom: 1.5rem;
-  font-weight: 600;
-  font-size: 0.95rem;
-  border: 2px solid;
+  padding: var(--space-md) var(--space-lg);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-lg);
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-medium);
+  border: 1px solid;
 }
 
 .alert-success {
-  background: linear-gradient(135deg, #D1FAE5, #A7F3D0);
   color: #065F46;
-  border-color: var(--success);
+  background-color: #D1FAE5;
+  border-color: #A7F3D0;
 }
 
 .alert-error {
-  background: linear-gradient(135deg, #FEE2E2, #FECACA);
   color: #991B1B;
-  border-color: var(--error);
+  background-color: #FEE2E2;
+  border-color: #FECACA;
 }
 
-/* Links */
+/* ============================================
+   LINKS
+   ============================================ */
+
 .text-center {
   text-align: center;
-  margin-top: 1.5rem;
+  margin-top: var(--space-lg);
 }
 
 .link-button {
-  color: var(--primary-magenta);
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-medium);
+  color: var(--orange-primary);
   text-decoration: none;
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: all 0.3s ease;
+  transition: color 0.15s ease;
 }
 
 .link-button:hover {
-  color: var(--dark-magenta);
-  text-decoration: underline;
+  color: var(--orange-dark);
 }
 
-/* Footer */
+/* ============================================
+   FOOTER
+   ============================================ */
+
 footer {
-  background: linear-gradient(135deg, var(--deep-purple), var(--dark-magenta));
-  color: var(--white);
+  background-color: var(--gray-900);
+  color: var(--gray-300);
   text-align: center;
-  padding: 2rem;
-  margin-top: 4rem;
-  font-size: 0.9rem;
-  font-weight: 500;
+  padding: var(--space-xl);
+  margin-top: var(--space-2xl);
+  font-size: 0.875rem;
 }
 
-/* Responsive Design */
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
 @media (max-width: 768px) {
   .login-card {
-    padding: 2rem 1.5rem;
+    padding: var(--space-xl) var(--space-lg);
   }
 
   .top-header {
-    padding: 1rem;
+    padding: var(--space-md);
     flex-direction: column;
-    gap: 1rem;
-  }
-
-  .top-header h1 {
-    font-size: 1.3rem;
+    gap: var(--space-md);
   }
 
   .nav-tabs-container {
-    padding: 0 1rem;
+    padding: 0 var(--space-md);
     overflow-x: auto;
   }
 
   .main-content {
-    padding: 0 1rem;
-    margin: 1.5rem auto;
+    padding: 0 var(--space-md);
+    margin: var(--space-lg) auto;
   }
 
   .balance-row {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
+    gap: var(--space-md);
   }
 
   .account-actions {
@@ -593,18 +539,12 @@ footer {
     width: 100%;
     text-align: center;
   }
-
-  .secondary-nav {
-    overflow-x: auto;
-  }
 }
 
-/* Utility Classes */
+/* ============================================
+   UTILITIES
+   ============================================ */
+
 .hidden {
-  display: none !important;
+  display: none;
 }
-
-.mt-1 { margin-top: 1rem; }
-.mt-2 { margin-top: 2rem; }
-.mb-1 { margin-bottom: 1rem; }
-.mb-2 { margin-bottom: 2rem; }
