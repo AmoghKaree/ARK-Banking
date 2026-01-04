@@ -7,118 +7,216 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <div class="login-container">
-    <div class="login-card" style="max-width: 600px;">
-      <div class="login-logo">
-        <h1>ARK</h1>
-        <p>Banking Reimagined</p>
-      </div>
-      
-      <h2>Create Your Account</h2>
-      <p>Join thousands of satisfied customers managing their finances securely</p>
-      
-      {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-          {% for category, message in messages %}
-            <div class="alert alert-{{ category }}">
-              {{ message }}
+  <!-- Header -->
+  <header class="auth-header">
+    <div class="auth-header-content">
+      <h1>ARK BANKING</h1>
+      <a href="{{ url_for('home') }}" class="header-link">Sign In</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="auth-main">
+    <div class="auth-container auth-container-wide">
+      <div class="auth-content">
+        <h2>Create your account</h2>
+        <p>Start banking with ARK today</p>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+        
+        <form action="{{ url_for('create_account') }}" method="POST" id="createAccountForm">
+          <!-- Personal Information -->
+          <div class="form-section">
+            <h3 class="form-section-title">Personal Information</h3>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" name="firstName" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" name="lastName" required>
+              </div>
             </div>
-          {% endfor %}
-        {% endif %}
-      {% endwith %}
-      
-      <form action="{{ url_for('create_account') }}" method="POST">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-          <div class="form-group">
-            <label>First Name</label>
-            <input type="text" name="firstName" required>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="dob">Date of Birth</label>
+                <input type="date" id="dob" name="dob" required>
+              </div>
+              
+              <div class="form-group">
+                <label>Gender</label>
+                <div class="radio-group">
+                  <div>
+                    <input type="radio" id="male" name="gender" value="Male" required>
+                    <label for="male">Male</label>
+                  </div>
+                  <div>
+                    <input type="radio" id="female" name="gender" value="Female">
+                    <label for="female">Female</label>
+                  </div>
+                  <div>
+                    <input type="radio" id="other" name="gender" value="Other">
+                    <label for="other">Other</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="ssn">Social Security Number</label>
+                <input type="text" id="ssn" name="ssn" placeholder="XXX-XX-XXXX" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="income">Annual Income</label>
+                <input type="number" id="income" name="income" placeholder="50000" required>
+              </div>
+            </div>
+          </div>
+
+          <!-- Account Credentials -->
+          <div class="form-section">
+            <h3 class="form-section-title">Account Credentials</h3>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="userName">Username</label>
+                <input type="text" id="userName" name="userName" required autocomplete="username">
+              </div>
+              
+              <div class="form-group">
+                <label for="password">Password</label>
+                <div class="password-input-wrapper">
+                  <input type="password" id="password" name="password" required autocomplete="new-password">
+                  <button type="button" class="password-toggle" onclick="togglePassword()">
+                    <span id="toggleText">Show</span>
+                  </button>
+                </div>
+                <div class="password-requirements">
+                  <p class="requirement" id="req-length">At least 8 characters</p>
+                  <p class="requirement" id="req-capital">One uppercase letter</p>
+                  <p class="requirement" id="req-number">One number</p>
+                  <p class="requirement" id="req-symbol">One symbol (!@#$%^&*)</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Account Type -->
+          <div class="form-section">
+            <h3 class="form-section-title">Account Type</h3>
+            
+            <div class="account-options">
+              <div class="radio-group">
+                <div>
+                  <input type="radio" id="checking" name="accountType" value="checking" required onclick="showDepositFields()">
+                  <label for="checking">Checking Only</label>
+                </div>
+                <div>
+                  <input type="radio" id="savings" name="accountType" value="savings" onclick="showDepositFields()">
+                  <label for="savings">Savings Only</label>
+                </div>
+                <div>
+                  <input type="radio" id="both" name="accountType" value="both" onclick="showDepositFields()">
+                  <label for="both">Both Accounts</label>
+                </div>
+              </div>
+            </div>
+            
+            <div id="depositFields"></div>
           </div>
           
-          <div class="form-group">
-            <label>Last Name</label>
-            <input type="text" name="lastName" required>
-          </div>
+          <button type="submit" id="submitBtn">Create Account</button>
+        </form>
+        
+        <div class="auth-footer">
+          <p>Already have an account? <a href="{{ url_for('home') }}" class="link-button">Sign in</a></p>
         </div>
-        
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-          <div class="form-group">
-            <label>Username</label>
-            <input type="text" name="userName" required>
-          </div>
-          
-          <div class="form-group">
-            <label>Password</label>
-            <input type="password" name="password" required>
-          </div>
-        </div>
-        
-        <div class="form-group">
-          <label>Gender</label>
-          <div class="radio-group">
-            <div>
-              <input type="radio" id="male" name="gender" value="Male" required>
-              <label for="male">Male</label>
-            </div>
-            <div>
-              <input type="radio" id="female" name="gender" value="Female">
-              <label for="female">Female</label>
-            </div>
-            <div>
-              <input type="radio" id="other" name="gender" value="Other">
-              <label for="other">Other</label>
-            </div>
-          </div>
-        </div>
-        
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-          <div class="form-group">
-            <label>Date of Birth</label>
-            <input type="date" name="dob" required>
-          </div>
-          
-          <div class="form-group">
-            <label>Annual Income</label>
-            <input type="number" name="income" placeholder="50000" required>
-          </div>
-        </div>
-        
-        <div class="form-group">
-          <label>Social Security Number</label>
-          <input type="text" name="ssn" placeholder="XXX-XX-XXXX" required>
-        </div>
-        
-        <div class="account-options">
-          <label>Account Type</label>
-          <div class="radio-group">
-            <div>
-              <input type="radio" id="checking" name="accountType" value="checking" required onclick="showDepositFields()">
-              <label for="checking">Checking Only</label>
-            </div>
-            <div>
-              <input type="radio" id="savings" name="accountType" value="savings" onclick="showDepositFields()">
-              <label for="savings">Savings Only</label>
-            </div>
-            <div>
-              <input type="radio" id="both" name="accountType" value="both" onclick="showDepositFields()">
-              <label for="both">Both Accounts</label>
-            </div>
-          </div>
-        </div>
-        
-        <div id="depositFields"></div>
-        
-        <button type="submit">Create Account</button>
-      </form>
-      
-      <div class="text-center">
-        <a href="{{ url_for('home') }}" class="link-button">
-          Already have an account? Sign in
-        </a>
       </div>
     </div>
-  </div>
+  </main>
+
+  <footer>
+    &copy; 2025 ARK Banking. All Rights Reserved.
+  </footer>
   
   <script>
+    // Password visibility toggle
+    function togglePassword() {
+      const passwordInput = document.getElementById('password');
+      const toggleText = document.getElementById('toggleText');
+      
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleText.textContent = 'Hide';
+      } else {
+        passwordInput.type = 'password';
+        toggleText.textContent = 'Show';
+      }
+    }
+
+    // Password validation
+    const passwordInput = document.getElementById('password');
+    const submitBtn = document.getElementById('submitBtn');
+    
+    passwordInput.addEventListener('input', function() {
+      const password = this.value;
+      
+      // Check length
+      const hasLength = password.length >= 8;
+      updateRequirement('req-length', hasLength);
+      
+      // Check uppercase
+      const hasCapital = /[A-Z]/.test(password);
+      updateRequirement('req-capital', hasCapital);
+      
+      // Check number
+      const hasNumber = /[0-9]/.test(password);
+      updateRequirement('req-number', hasNumber);
+      
+      // Check symbol
+      const hasSymbol = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+      updateRequirement('req-symbol', hasSymbol);
+      
+      // Enable/disable submit button
+      const allValid = hasLength && hasCapital && hasNumber && hasSymbol;
+      submitBtn.disabled = !allValid;
+      submitBtn.style.opacity = allValid ? '1' : '0.5';
+      submitBtn.style.cursor = allValid ? 'pointer' : 'not-allowed';
+    });
+    
+    function updateRequirement(id, isValid) {
+      const element = document.getElementById(id);
+      if (isValid) {
+        element.style.color = 'var(--success)';
+        element.style.fontWeight = 'var(--font-weight-semibold)';
+        element.textContent = '✓ ' + element.textContent.replace('✓ ', '');
+      } else {
+        element.style.color = 'var(--gray-600)';
+        element.style.fontWeight = 'var(--font-weight-normal)';
+        element.textContent = element.textContent.replace('✓ ', '');
+      }
+    }
+
+    // Initial state
+    submitBtn.disabled = true;
+    submitBtn.style.opacity = '0.5';
+    submitBtn.style.cursor = 'not-allowed';
+
+    // Deposit fields
     function showDepositFields() {
       const accountType = document.querySelector('input[name="accountType"]:checked').value;
       const depositFields = document.getElementById('depositFields');
@@ -127,29 +225,29 @@
       
       if (accountType === 'checking') {
         html = `
-          <div class="form-group">
-            <label>Initial Checking Deposit</label>
-            <input type="number" name="checking" placeholder="0.00" min="0" step="0.01" required>
+          <div class="form-group" style="margin-top: var(--space-lg);">
+            <label for="checking-deposit">Initial Checking Deposit</label>
+            <input type="number" id="checking-deposit" name="checking" placeholder="0.00" min="0" step="0.01" required>
           </div>
         `;
       } else if (accountType === 'savings') {
         html = `
-          <div class="form-group">
-            <label>Initial Savings Deposit</label>
-            <input type="number" name="savings" placeholder="0.00" min="0" step="0.01" required>
+          <div class="form-group" style="margin-top: var(--space-lg);">
+            <label for="savings-deposit">Initial Savings Deposit</label>
+            <input type="number" id="savings-deposit" name="savings" placeholder="0.00" min="0" step="0.01" required>
           </div>
         `;
       } else if (accountType === 'both') {
         html = `
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-row" style="margin-top: var(--space-lg);">
             <div class="form-group">
-              <label>Initial Checking Deposit</label>
-              <input type="number" name="checking" placeholder="0.00" min="0" step="0.01" required>
+              <label for="checking-deposit">Initial Checking Deposit</label>
+              <input type="number" id="checking-deposit" name="checking" placeholder="0.00" min="0" step="0.01" required>
             </div>
             
             <div class="form-group">
-              <label>Initial Savings Deposit</label>
-              <input type="number" name="savings" placeholder="0.00" min="0" step="0.01" required>
+              <label for="savings-deposit">Initial Savings Deposit</label>
+              <input type="number" id="savings-deposit" name="savings" placeholder="0.00" min="0" step="0.01" required>
             </div>
           </div>
         `;
