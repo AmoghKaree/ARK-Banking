@@ -7,53 +7,61 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <!-- Header -->
-  <header class="auth-header">
-    <div class="auth-header-content">
-      <h1>ARK BANKING</h1>
+  <!-- Professional Header -->
+  <header class="main-header">
+    <div class="header-container">
+      <div class="header-logo">
+        <div class="logo-circle">ARK</div>
+        <span class="logo-text">ARK BANKING</span>
+      </div>
+      <nav class="header-nav">
+        <a href="{{ url_for('create_account') }}" class="nav-link">Open Account</a>
+      </nav>
     </div>
   </header>
 
-  <!-- Main Content -->
-  <main class="auth-main">
-    <div class="auth-container">
-      <div class="auth-content">
-        <h2>Sign in</h2>
-        <p>Access your ARK Banking account</p>
-        
-        {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-            {% for category, message in messages %}
-              <div class="alert alert-{{ category }}">
-                {{ message }}
-              </div>
-            {% endfor %}
-          {% endif %}
-        {% endwith %}
-        
-        <form action="/login" method="POST">
-          <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" required autocomplete="username">
-          </div>
-          
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required autocomplete="current-password">
-          </div>
-          
-          <button type="submit">Sign In</button>
-        </form>
-        
-        <div class="auth-footer">
-          <p>Don't have an account? <a href="{{ url_for('create_account') }}" class="link-button">Create one</a></p>
+  <!-- Login Section -->
+  <main class="auth-page">
+    <div class="auth-box">
+      <div class="auth-box-header">
+        <h1>Sign In</h1>
+        <p>Access your account</p>
+      </div>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      <form action="/login" method="POST" class="auth-form">
+        <div class="input-field">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" required autocomplete="username">
         </div>
+
+        <div class="input-field">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required autocomplete="current-password">
+        </div>
+
+        <button type="submit" class="submit-btn">Sign In</button>
+      </form>
+
+      <div class="auth-box-footer">
+        <p>Don't have an account? <a href="{{ url_for('create_account') }}">Create one</a></p>
       </div>
     </div>
   </main>
 
-  <footer>
-    &copy; 2025 ARK Banking. All Rights Reserved.
+  <footer class="page-footer">
+    <div class="footer-container">
+      <p>&copy; 2025 ARK Banking. All Rights Reserved.</p>
+    </div>
   </footer>
 </body>
 </html>
