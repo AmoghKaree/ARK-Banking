@@ -32,6 +32,7 @@
   --font-weight-bold: 700;
 }
 
+/* Remove background from body, add only to auth pages */
 body {
   font-family: var(--font-body);
   font-size: 16px;
@@ -42,6 +43,20 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+.auth-page {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  
+  /* Orange pattern only on auth pages */
+  background-image: url('/static/orange-pattern.png');
+  background-size: auto;
+  background-position: top left;
+  background-repeat: repeat;
 }
 
 /* ============================================
