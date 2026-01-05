@@ -353,7 +353,8 @@ class Accounts:
                 for line in f:
                     if userName in line:
                         transactions.append(line.strip())
-            return transactions[-10:]
+            return transactions
         except Exception as e:
             print(f"Transaction history error: {e}")
             return []
+
