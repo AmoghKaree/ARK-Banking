@@ -32,7 +32,6 @@
   --font-weight-bold: 700;
 }
 
-/* Remove background from body, add only to auth pages */
 body {
   font-family: var(--font-body);
   font-size: 16px;
@@ -43,20 +42,13 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-}
-
-.auth-page {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 3rem 1rem;
   
-  /* Orange pattern only on auth pages */
+  /* Orange pattern background */
   background-image: url('/static/orange-pattern.png');
   background-size: auto;
   background-position: top left;
   background-repeat: repeat;
+  background-attachment: fixed;
 }
 
 /* ============================================
@@ -81,13 +73,15 @@ body {
 .header-logo {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1rem;
 }
 
 .logo-image {
-  width: 48px;
-  height: 48px;
+  height: 50px;
+  width: auto;
   object-fit: contain;
+  display: block;
+  margin-top: -2px;
 }
 
 .logo-text {
@@ -95,6 +89,7 @@ body {
   font-size: 1.5rem;
   font-weight: var(--font-weight-bold);
   letter-spacing: 0.5px;
+  line-height: 1;
 }
 
 .header-nav {
@@ -118,7 +113,7 @@ body {
 }
 
 /* ============================================
-   AUTH PAGES - NO CARDS
+   AUTH PAGES
    ============================================ */
 
 .auth-page {
@@ -355,53 +350,6 @@ body {
 .auth-box-footer a:hover {
   color: var(--orange-dark);
   text-decoration: underline;
-}
-
-/* ============================================
-   FOOTER
-   ============================================ */
-
-.page-footer {
-  background-color: var(--gray-900);
-  color: var(--gray-300);
-  padding: 1.5rem 0;
-  margin-top: auto;
-}
-
-.footer-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  text-align: center;
-}
-
-.footer-container p {
-  font-size: 0.875rem;
-}
-
-/* ============================================
-   ALERTS
-   ============================================ */
-
-.alert {
-  padding: 0.875rem 1rem;
-  border-radius: 6px;
-  margin-bottom: 1.25rem;
-  font-size: 0.875rem;
-  font-weight: var(--font-weight-medium);
-  border: 1px solid;
-}
-
-.alert-success {
-  color: #065F46;
-  background-color: #D1FAE5;
-  border-color: #A7F3D0;
-}
-
-.alert-error {
-  color: #991B1B;
-  background-color: #FEE2E2;
-  border-color: #FECACA;
 }
 
 /* ============================================
@@ -644,6 +592,302 @@ body {
   color: var(--orange-dark);
 }
 
+/* ============================================
+   MODERN TRANSACTION PAGES
+   ============================================ */
+
+.transaction-page-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.transaction-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.transaction-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.deposit-icon {
+  background: linear-gradient(135deg, #10B981, #059669);
+  color: white;
+}
+
+.withdraw-icon {
+  background: linear-gradient(135deg, #F59E0B, #D97706);
+  color: white;
+}
+
+.transfer-icon {
+  background: linear-gradient(135deg, var(--orange-primary), var(--orange-dark));
+  color: white;
+}
+
+.transaction-header h2 {
+  font-size: 1.875rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--gray-900);
+  margin-bottom: 0.25rem;
+}
+
+.transaction-header p {
+  font-size: 1rem;
+  color: var(--gray-600);
+}
+
+.transaction-form {
+  margin-bottom: 2rem;
+}
+
+.form-card {
+  background-color: var(--white);
+  border-radius: 12px;
+  padding: 2rem;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.form-group-modern {
+  margin-bottom: 2rem;
+}
+
+.form-group-modern label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-semibold);
+  color: var(--gray-900);
+  margin-bottom: 0.75rem;
+}
+
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 1rem;
+  font-size: 1.125rem;
+  font-weight: var(--font-weight-semibold);
+  color: var(--gray-600);
+  pointer-events: none;
+}
+
+.input-with-icon input {
+  width: 100%;
+  padding: 1rem 1rem 1rem 2.5rem;
+  font-size: 1.5rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--gray-900);
+  background-color: var(--gray-50);
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  transition: all 0.15s ease;
+}
+
+.input-with-icon input:focus {
+  outline: none;
+  border-color: var(--orange-primary);
+  background-color: var(--white);
+}
+
+/* Account Selection */
+.account-select-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.account-select-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.account-option {
+  position: relative;
+  cursor: pointer;
+  display: block;
+}
+
+.account-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.account-option-content {
+  padding: 1.25rem;
+  background-color: var(--gray-50);
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  transition: all 0.15s ease;
+}
+
+.account-option input[type="radio"]:checked + .account-option-content {
+  background-color: var(--orange-pale);
+  border-color: var(--orange-primary);
+  box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
+}
+
+.account-option:hover .account-option-content {
+  border-color: var(--gray-300);
+}
+
+.account-option-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.account-option-name {
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-semibold);
+  color: var(--gray-900);
+}
+
+.account-option-id {
+  font-size: 0.75rem;
+  color: var(--gray-600);
+  font-family: 'Courier New', monospace;
+}
+
+.account-option-balance {
+  font-size: 1.25rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--gray-900);
+}
+
+/* Transfer Direction */
+.transfer-direction {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 1.5rem;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.transfer-arrow {
+  font-size: 2rem;
+  color: var(--orange-primary);
+  font-weight: var(--font-weight-bold);
+  margin-top: 2rem;
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.btn-action {
+  flex: 1;
+  padding: 0.875rem 1.5rem;
+  font-size: 1rem;
+  font-weight: var(--font-weight-semibold);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-action-primary {
+  background-color: var(--orange-primary);
+  color: var(--white);
+  border: none;
+}
+
+.btn-action-primary:hover {
+  background-color: var(--orange-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+}
+
+.btn-action-secondary {
+  background-color: var(--white);
+  color: var(--gray-700);
+  border: 2px solid var(--border);
+}
+
+.btn-action-secondary:hover {
+  background-color: var(--gray-50);
+  border-color: var(--gray-300);
+}
+
+/* ============================================
+   ALERTS
+   ============================================ */
+
+.alert {
+  padding: 0.875rem 1rem;
+  border-radius: 6px;
+  margin-bottom: 1.25rem;
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-medium);
+  border: 1px solid;
+}
+
+.alert-success {
+  color: #065F46;
+  background-color: #D1FAE5;
+  border-color: #A7F3D0;
+}
+
+.alert-error {
+  color: #991B1B;
+  background-color: #FEE2E2;
+  border-color: #FECACA;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+
+.page-footer {
+  background-color: var(--gray-900);
+  color: var(--gray-300);
+  padding: 1.5rem 0;
+  margin-top: auto;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  text-align: center;
+}
+
+.footer-container p {
+  font-size: 0.875rem;
+}
+
+footer {
+  background-color: var(--gray-900);
+  color: var(--gray-300);
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 0.875rem;
+}
+
+/* ============================================
+   UTILITIES
+   ============================================ */
+
 .hidden {
   display: none;
 }
@@ -661,14 +905,16 @@ body {
     font-size: 1.25rem;
   }
 
-  .logo-circle {
-    width: 40px;
+  .logo-image {
     height: 40px;
-    font-size: 1rem;
   }
 
   .auth-page {
     padding: 2rem 1rem;
+  }
+
+  .auth-box {
+    padding: 2rem 1.5rem;
   }
 
   .input-row {
@@ -708,5 +954,40 @@ body {
   .btn-secondary {
     width: 100%;
     text-align: center;
+  }
+
+  .transaction-header {
+    gap: 1rem;
+  }
+
+  .transaction-icon {
+    width: 56px;
+    height: 56px;
+  }
+
+  .transaction-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .form-card {
+    padding: 1.5rem;
+  }
+
+  .account-select-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .transfer-direction {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .transfer-arrow {
+    transform: rotate(90deg);
+    margin: 0;
+  }
+
+  .form-actions {
+    flex-direction: column;
   }
 }
