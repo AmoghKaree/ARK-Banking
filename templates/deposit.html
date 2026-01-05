@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ARK Banking - Deposit</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
 </head>
 <body>
   <!-- Top Header -->
@@ -25,39 +26,64 @@
 
   <!-- Main Content -->
   <div class="main-content">
-    <div class="account-card" style="max-width: 600px; margin: 0 auto;">
-      <h2 style="margin-bottom: 0.5rem; color: var(--text-dark);">Deposit Funds</h2>
-      <p style="color: var(--text-medium); margin-bottom: 2rem;">Add money securely to your account</p>
-      
-      <form action="{{ url_for('deposit') }}" method="POST">
-        <div class="form-group">
-          <label>Amount to Deposit</label>
-          <input type="number" name="amount" placeholder="0.00" min="0.01" step="0.01" required style="font-size: 1.25rem; padding: 1rem;">
+    <div class="transaction-page-container">
+      <div class="transaction-header">
+        <div class="transaction-icon deposit-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 5v14M5 12l7 7 7-7"/>
+          </svg>
         </div>
-        
-        <div class="form-group">
-          <label>Deposit To</label>
-          <div class="radio-group">
-            {% if accounts.checkingId %}
-            <div>
-              <input type="radio" id="checking" name="accountType" value="checking" required>
-              <label for="checking">Checking (Balance: ${{ "%.2f"|format(accounts.checkingBalance) }})</label>
+        <div>
+          <h2>Deposit Funds</h2>
+          <p>Add money to your account</p>
+        </div>
+      </div>
+
+      <form action="{{ url_for('deposit') }}" method="POST" class="transaction-form">
+        <div class="form-card">
+          <div class="form-group-modern">
+            <label for="amount">Amount</label>
+            <div class="input-with-icon">
+              <span class="input-icon">$</span>
+              <input type="number" id="amount" name="amount" placeholder="0.00" min="0.01" step="0.01" required>
             </div>
-            {% endif %}
-            
-            {% if accounts.savingsId %}
-            <div>
-              <input type="radio" id="savings" name="accountType" value="savings" {% if not accounts.checkingId %}required{% endif %}>
-              <label for="savings">Savings (Balance: ${{ "%.2f"|format(accounts.savingsBalance) }})</label>
-            </div>
-            {% endif %}
           </div>
-        </div>
-        
-        <button type="submit">Complete Deposit</button>
-        
-        <div class="text-center" style="margin-top: 1rem;">
-          <a href="{{ url_for('dashboard') }}" class="link-button">Cancel</a>
+
+          <div class="form-group-modern">
+            <label>Deposit To</label>
+            <div class="account-select-grid">
+              {% if accounts.checkingId %}
+              <label class="account-option">
+                <input type="radio" name="accountType" value="checking" required>
+                <div class="account-option-content">
+                  <div class="account-option-header">
+                    <span class="account-option-name">Checking</span>
+                    <span class="account-option-id">•••• {{ accounts.checkingId[-4:] }}</span>
+                  </div>
+                  <span class="account-option-balance">${{ "%.2f"|format(accounts.checkingBalance) }}</span>
+                </div>
+              </label>
+              {% endif %}
+              
+              {% if accounts.savingsId %}
+              <label class="account-option">
+                <input type="radio" name="accountType" value="savings" {% if not accounts.checkingId %}required{% endif %}>
+                <div class="account-option-content">
+                  <div class="account-option-header">
+                    <span class="account-option-name">Savings</span>
+                    <span class="account-option-id">•••• {{ accounts.savingsId[-4:] }}</span>
+                  </div>
+                  <span class="account-option-balance">${{ "%.2f"|format(accounts.savingsBalance) }}</span>
+                </div>
+              </label>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn-action btn-action-primary">Complete Deposit</button>
+            <a href="{{ url_for('dashboard') }}" class="btn-action btn-action-secondary">Cancel</a>
+          </div>
         </div>
       </form>
     </div>
