@@ -167,6 +167,22 @@ def transactions():
     
     return render_template('transactions.html', transactions=transaction_history)
 
+@app.route('/debug-transactions')
+def debug_transactions():
+    import os
+    
+    # Check if file exists
+    file_exists = os.path.exists('transactionData.txt')
+    
+    # Try to read file
+    try:
+        with open('transactionData.txt', 'r') as f:
+            content = f.read()
+    except:
+        content = "File not found or error reading"
+    
+    return f"<pre>File exists: {file_exists}\n\nContent:\n{content}</pre>"
+
 @app.route('/logout')
 def logout():
     """Logout user"""
