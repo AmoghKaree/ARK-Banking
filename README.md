@@ -1,5 +1,8 @@
 # ARK Banking System
-[![ARK Banking](static/logo.jpg)]
+
+<p align = "center">
+<img src ="static/logo.jpg" width = "150"/>
+</p>
 
 Check it out!: https://ark-banking.onrender.com/
 
@@ -46,7 +49,9 @@ So when building this application, I built it with a file data system. All this 
 
 ## How the make shift data base would work: 
 
-![GitHub as Database Architecture](images/architecture-diagram.jpg)
+<p align = "center">
+<img src ="images/architecture-diagram.jpg" width = "600"/>
+</p>
 
 ## For the Future
 
