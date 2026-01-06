@@ -1,7 +1,7 @@
 # ARK Banking System
 
 <p align = "center">
-<img src ="static/logo.jpg" width = "150"/>
+<img src ="static/favicon.png" width = "150"/>
 </p>
 
 Check it out!: https://ark-banking.onrender.com/
